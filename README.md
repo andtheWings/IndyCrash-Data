@@ -1,4 +1,4 @@
-:children_crossing: IndyCrash Data Curation
+:children_crossing: IndyCrash Data
 ===
 
 Hello! I'm Daniel, a pediatric resident in Indianapolis who is passionate about the built environment's role in improving people's health and safety. I am grateful for public access to the awesome [ARIES datasets](https://hub.mph.in.gov/dataset/aries-crash-data-2007-2017) and wanted to give back to the road safety community by sharing my workflow for  data prep. 
