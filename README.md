@@ -1,8 +1,7 @@
-:children_crossing: IndyCrash Data
+🚸 IndyCrash-Data
 ===
 
 Hello! I'm Daniel, a pediatric resident in Indianapolis who is passionate about the built environment's role in improving people's health and safety. I am grateful for public access to the awesome [ARIES datasets](https://hub.mph.in.gov/dataset/aries-crash-data-2007-2017) and wanted to give back to the road safety community by sharing my workflow for  data prep. 
-
 
 ## Rationale
 
@@ -20,9 +19,7 @@ Solution -- We combine all ARIES datasets from annual reports into a unified dat
 
 One of the principles of ["tidy data"](https://tidyr.tidyverse.org/articles/tidy-data.html) is that "each type of observational unit forms a table". Because ARIES data is stored with a mix of observational units in each row, there is risk for redundacy of data storage that can lead to inconsistencies depending on how data is queried. 
 
-:::info
-Further explanation of this issue is forthcoming!
-:::
+> Further explanation of this issue is forthcoming!
 
 Solution -- We separate variables into 3 tables representing people, vehicles, and crash events respectively.
 
@@ -34,6 +31,6 @@ I'm strong believer in the value of [citizen scientists](https://en.wikipedia.or
 
 I have generated this dataset as part of a larger effort to understand the dyanamics of risk for pedestrian/bicyclist crashes around the city of Indianapolis. 
 
-:::info
+## To Be Continued
+
 Keep an eye out for updates on this work!
-:::
