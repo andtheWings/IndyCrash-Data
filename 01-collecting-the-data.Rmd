@@ -4,7 +4,7 @@ First things first, we need to acquire yearly datasets of crashes from the ARIES
 
 Start by loading the needed R libraries.
 
-```{r include=FALSE}
+```{r eval=FALSE}
 library(readr) # "The goal of 'readr' is to provide a fast and friendly way to read rectangular data (like 'csv', 'tsv', and 'fwf')."
 library(dplyr) # "A fast, consistent tool for working with data frame like objects, both in memory and out of memory.
 library(lubridate) # Lubridate makes it easier to do the things R does with date-times and possible to do the things R does not.
@@ -13,7 +13,7 @@ library(DBI) # A database interface definition for communication between R and r
 
 Cool, let's get the yearly datasets downloaded to our computer.
 
-```{r}
+```{r eval=FALSE}
 # Make a reference vector of years for the datasets
 years <- 2007:2019
 
@@ -42,3 +42,4 @@ for (i in 1:13) {
     download.file(url = urls[i], destfile = paste0("raw-ARIES/aries-crash-data-",years[i],".csv"))
 }
 ```
+
