@@ -1,14 +1,19 @@
 --- 
-title: "🚸 IndyCrash-Data"
+title: "🚸 IndyCrash Data"
 author: "Daniel P. Riggins"
 date: "`r Sys.Date()`"
-site: bookdown::bookdown_site
+bibliography:
+- book.bib
+- packages.bib
+description: Data prep for automobile crashes in Indiana
 documentclass: book
-bibliography: [book.bib, packages.bib]
-biblio-style: apalike
 link-citations: yes
-description: "Data prep for automobile crashes in Indiana "
+site: bookdown::bookdown_site
+biblio-style: apalike
 ---
+
+# Welcome {-}
+🚶 🚴 🏃 
 
 Hello! I'm Daniel, a pediatric resident in Indianapolis who is passionate about the built environment's role in improving people's health and safety. I am grateful for public access to the awesome [ARIES datasets](https://hub.mph.in.gov/dataset/aries-crash-data-2007-2017) and wanted to give back to the road safety community by sharing my workflow for  data prep. 
 
@@ -20,11 +25,11 @@ As partners with the [Indiana Management Performance Hub](https://www.in.gov/mph
 
 There are two issues with the data that this dataset addresses.
 
-### Issue 1 -- ARIES data is separated into annual reports:
+### Issue One -- ARIES data is separated into annual reports:
 
 Solution -- We combine all ARIES datasets from annual reports into a unified database that covers 2007 to present.
 
-### Issue 2 -- Each year's table has records that mix observational units:
+### Issue Two -- Each year's table has records that mix observational units:
 
 One of the principles of ["tidy data"](https://tidyr.tidyverse.org/articles/tidy-data.html) is that "each type of observational unit forms a table". Because ARIES data is stored with a mix of observational units in each row, there is risk for redundacy of data storage that can lead to inconsistencies depending on how data is queried. 
 
