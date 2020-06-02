@@ -4,7 +4,7 @@ First things first, we need to acquire yearly datasets of crashes from the ARIES
 
 Start by loading the needed R libraries.
 
-```{r eval=FALSE}
+```{r message=FALSE, warning=FALSE}
 library(readr) # "The goal of 'readr' is to provide a fast and friendly way to read rectangular data (like 'csv', 'tsv', and 'fwf')."
 library(dplyr) # "A fast, consistent tool for working with data frame like objects, both in memory and out of memory.
 library(lubridate) # Lubridate makes it easier to do the things R does with date-times and possible to do the things R does not.
@@ -160,4 +160,60 @@ columnParsing <- cols(INDEXING_NUMBER = col_double(),
                        SUBDISTRICT = col_character()
                        )
 ```
+
+## Prepare a database for storing the data
+
+We'll be using the [SQLite database system](https://sqlite.org/index.html) for storing our data.
+
+```{r}
+# Write and initialize a connection to the database
+mydb <- dbConnect(RSQLite::SQLite(), "ARIES.sqlite")
+```
+
+At this point the database is empty:
+
+```{r}
+# List tables stored in our database
+dbListTables(mydb)
+```
+
+```{r eval=FALSE, include=FALSE}
+# Delete table if needed
+dbRemoveTable(mydb, "combinedARIES")
+```
+
+## Feed records into the database
+
+Our empty database is hungry! To start things off, let's just feed in a single year's worth of records. Before we write the records in, we'll do some light data cleaning as explained in the code comments below.
+
+>You may think it's a little weird to convert COLLDTE variable into a "date" type then convert it back into "character" text. It turns out that the CSV files in ARIES store their dates in different formats:
+>
+>- 2007-2016: Year.Month.Day
+>- 2017-2018: Year-Month-Day
+>- 2019: Month/Day/Year
+>
+>By first converting the variable into the R "date" type, I'm standardizing each year so that the format is the same. It'll make things easier down the line.
+
+```{r}
+# Parse the first csv file for 2007
+Crashes2007 <- readr::read_csv("raw-ARIES/aries_crash_data_2007.csv", col_types = columnParsing)
+
+# Standardize the date format
+Crashes2007$COLLDTE <- Crashes2007$COLLDTE %>% ymd() %>% as.character()
+
+# Clean the table
+cleanCrashes2007 <- Crashes2007 %>%
+    # Delete duplicate rows
+    distinct() %>%
+    # Remove rows that don't have a valid latitude, longitude, and date
+    filter(!is.na(LATDECIMALNMB) & 
+           !is.na(LONGDECIMALNMB) &
+           !is.na(COLLDTE) &
+           LATDECIMALNMB != 0 & 
+           LONGDECIMALNMB != 0)
+
+# Write 2007 records into the database
+dbWriteTable(mydb, "combinedARIES", cleanCrashes2007)
+```
+
 
