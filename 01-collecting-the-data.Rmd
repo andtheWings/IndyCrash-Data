@@ -11,7 +11,7 @@ library(lubridate) # Lubridate makes it easier to do the things R does with date
 library(DBI) # A database interface definition for communication between R and relational database management systems.
 ```
 
-Cool, let's get the yearly datasets downloaded to our computer.
+## Download the yearly datasets
 
 ```{r eval=FALSE}
 # Make a reference vector of years for the datasets
@@ -41,5 +41,123 @@ system("mkdir raw-ARIES")
 for (i in 1:13) {
     download.file(url = urls[i], destfile = paste0("raw-ARIES/aries-crash-data-",years[i],".csv"))
 }
+```
+
+## Instruct R on how to parse the datasets
+
+CSV files are in a simple-text spreadsheet format. They don't give much contextual information. For example, R needs to know what kind of variable each column corresponds to. Normally it can infer the type on its own. But we have so much missing data in these files, R hiccups when trying to assign a type. The next block of code walks through how to manually type each column.
+
+You may notice that we are telling R to skip many of the columns it will encounter. This is because these columns are duplicates that store the same information in different formats. We will only keep one of the respective columns when these situations arise.
+
+```{r}
+# Tell the read_csv function how we want it to parse types for each column of the csv files. 
+columnParsing <- cols(INDEXING_NUMBER = col_double(),
+                       INDIVIDUAL_MR_RECORD = col_double(),
+                       UNIT_MR_NUMBER = col_double(),
+                       STATUSCDE = col_character(),
+                       PERSONNMB = col_double(),
+                       PERSONTYPECDE = col_skip(),
+                       PERSONTYPEDESCR = col_character(),
+                       GENDERCDE = col_character(),
+                       AGE_GRP = col_character(),
+                       POSINVEHCDE = col_skip(),
+                       POSINVEHDESCR = col_character(),
+                       EJECTTRAPCDE = col_skip(),
+                       EJECTTRAPDESCR = col_character(),
+                       SAFETYEQUUSEDCDE = col_skip(),
+                       SAFETYEQUUSEDDESCR = col_character(),
+                       SAFETYEQUEFFIND = col_character(),
+                       INJSTATUSCDE = col_skip(),
+                       INJSTATUSDESCR = col_character(),
+                       INJNATURECDE = col_skip(),
+                       INJNATUREDESCR = col_character(),
+                       INJLOCCDE = col_skip(),
+                       INJLOCCDESCR = col_character(),
+                       TESTGIVENCDE = col_skip(),
+                       TESTGIVENDESCR = col_character(),
+                       RESULTALCHTXT = col_double(),
+                       RESULTDRUGIND = col_character(),
+                       AGENCYORITXT = col_skip(),
+                       AGENCYORIDESCR = col_character(),
+                       COUNTYCDE = col_skip(),
+                       COUNTY_STATE = col_skip(),
+                       COUNTYDESCR = col_character(),
+                       CITYCDE = col_skip(),
+                       CITYDESCR = col_character(),
+                       COLLDTE = col_character(),
+                       COLLISION_DAY = col_character(),
+                       COLLISION_MONTH = col_character(),
+                       COLLISION_YEAR = col_double(),
+                       COLLISION_TIME = col_character(),
+                       COLLISION_TIME_AM_PM = col_character(),
+                       MOTORVEHINVOLVEDNMB = col_double(),
+                       TRAILERSINVOLVEDNMB = col_double(),
+                       INJUREDNMB = col_double(),
+                       DEADNMB = col_double(),
+                       DEERNMB = col_double(),
+                       RDWYSUFFIXTXT = col_character(),
+                       RDWYRAMPTXT = col_character(),
+                       INTERINTERCHANGETXT = col_character(),
+                       INCORPLIMITIND = col_character(),
+                       PROPDAMAGECDE = col_skip(),
+                       PROPDAMAGEDESCR = col_character(),
+                       LATDECIMALNMB = col_double(),
+                       LONGDECIMALNMB = col_double(),
+                       TRAFFICCNTLOPIND = col_character(),
+                       AGGRESSIVEDRIVEIND = col_character(),
+                       HITRUNIND = col_character(),
+                       SCHOOLZONEIND = col_character(),
+                       RUMBLESTRIPIND = col_character(),
+                       CONSTRUCTIND = col_character(),
+                       LIGHTCONDCDE = col_skip(),
+                       LIGHTCONDDESCR = col_character(),
+                       WEATHERCDE = col_skip(),
+                       WEATHERDESCR = col_character(),
+                       SURFACETYPECDE_CONDDESCR = col_character(),
+                       SURFACETYPECDE = col_skip(),
+                       SURFACETYPEDESCR = col_character(),
+                       PRIMARYFACTORCDE = col_skip(),
+                       PRIMARYFACTORDESCR = col_character(),
+                       MANNERCOLLCDE = col_skip(),
+                       MANNERCOLLDESCR = col_character(),
+                       TIMENOTIFIEDTXT = col_character(),
+                       TIMENOTIFIEDAMPMTXT = col_character(),
+                       TIMEARRIVEDTXT = col_character(),
+                       TIMEARRIVEDAMPMTXT = col_character(),
+                       INVESTCOMPLETEIND = col_character(),
+                       PHOTOSTAKENIND = col_character(),
+                       UNIQUELOCATIONID = col_character(),
+                       STATEPROPIND = col_character(),
+                       TRAFFICCNTRLCDE = col_skip(),
+                       TRAFFICCNTRLDESCR = col_character(),
+                       UNITNMB = col_double(),
+                       UNIT_VEHICLE_NUMBER = col_double(),
+                       UNITTYPECDE = col_skip(),
+                       UNITTYPEDESCR = col_character(),
+                       VEHYEARTXT = col_double(),
+                       VEHMAKETXT = col_character(),
+                       VEHMODELTXT = col_character(),
+                       OCCUPSNMB = col_double(),
+                       VEHLICSTATECDE = col_character(),
+                       VEHLICSTATEDESCR = col_skip(),
+                       AXELSTXT = col_double(),
+                       SPEEDLIMITTXT = col_character(),
+                       TOWEDIND = col_character(),
+                       VEHUSECDE = col_skip(),
+                       VEHUSEDESCR = col_character(),
+                       ROADTYPECDE = col_skip(),
+                       ROADTYPEDESCR = col_character(),
+                       TRAVDIRCDE = col_character(),
+                       TRAVDIRDESCR = col_skip(),
+                       EMGERENCY_RUN = col_character(),
+                       FIREIND = col_character(),
+                       COLLEVENTCDE = col_skip(),
+                       COLLEVENTDESCR = col_character(),
+                       PRECOLLACTCDE = col_skip(),
+                       PRECOLLACTDESCR = col_character(),
+                       DISTRICT = col_character(),
+                       DISTRICT_NUM = col_skip(),
+                       SUBDISTRICT = col_character()
+                       )
 ```
 
