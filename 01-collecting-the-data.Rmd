@@ -194,7 +194,7 @@ Our empty database is hungry! To start things off, let's just feed in a single y
 >
 >By first converting the variable into the R "date" type, I'm standardizing each year so that the format is the same. It'll make things easier down the line.
 
-```{r}
+```{r eval=FALSE}
 # Parse the first csv file for 2007
 Crashes2007 <- readr::read_csv("raw-ARIES/aries_crash_data_2007.csv", col_types = columnParsing)
 
@@ -216,4 +216,42 @@ cleanCrashes2007 <- Crashes2007 %>%
 dbWriteTable(mydb, "combinedARIES", cleanCrashes2007)
 ```
 
+It's going to get tedious if we write all this code out for every single year. Let's automate the process! As we enter the for-loop below, I think it's easier to read the output messages as the code is executing. Otherwise it may be a little head-spinning if you're not used to this sort of thing.
+
+```{r cache=TRUE}
+# Store a vector of years to parse
+yearsWithout2007 <- 2008:2019
+
+# Automate!
+for (year in yearsWithout2007) {
+    message("Parsing csv for ",year," into a tibble:")
+    tempTibble <- readr::read_csv(paste0("raw-ARIES/aries_crash_data_",year,".csv"), col_types = columnParsing)
+    message("There are ",nrow(tempTibble)," records total for ",year)
+    message("Standardizing the date format")
+    tryCatch(
+        expr = {
+            tempTibble$COLLDTE <- tempTibble$COLLDTE %>% ymd() %>% as.character()
+            message("Succesfully parsed tibble for ",year," using dates in year-month-day format")
+            tempTibble$COLLDTE
+        },
+        warning = function(w) {
+            message("Caught a warning from tibble for ",year,". Will try an alternate parsing method")
+            tempTibble$COLLDTE <- tempTibble$COLLDTE %>% mdy() %>% as.character()
+            message("Successfully parsed tibble for ",year," using dates in month-day-year format")
+            tempTibble$COLLDTE
+        }
+    )
+    message("Cleaning the data by deleting duplicate rows and removing rows without a valid latitude, longitude, and date")
+    cleanedTempTibble <- tempTibble %>%
+        distinct() %>%
+        filter(!is.na(LATDECIMALNMB) & 
+               !is.na(LONGDECIMALNMB) &
+               !is.na(COLLDTE) &
+               LATDECIMALNMB != 0 & 
+               LONGDECIMALNMB != 0)
+    message("Writing records for ",year," to the database.")
+    dbAppendTable(mydb, "combinedARIES", cleanedTempTibble)
+}
+message("All done!")
+```
 
