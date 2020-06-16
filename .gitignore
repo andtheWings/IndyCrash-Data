@@ -1,0 +1,14 @@
+
+.Rproj.user/
+
+.rstudio/
+
+_book/
+
+raw-ARIES/
+
+.bash_history
+
+.Rhistory
+
+*.sqlite
