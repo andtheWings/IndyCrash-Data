@@ -9,6 +9,7 @@ library(readr) # "The goal of 'readr' is to provide a fast and friendly way to r
 library(dplyr) # "A fast, consistent tool for working with data frame like objects, both in memory and out of memory.
 library(lubridate) # Lubridate makes it easier to do the things R does with date-times and possible to do the things R does not.
 library(DBI) # A database interface definition for communication between R and relational database management systems.
+library(disk.frame) #[M]anipulate tabular data that doesn’t fit into Random Access Memory
 ```
 
 ## Download the yearly datasets
