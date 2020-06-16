@@ -162,3 +162,10 @@ columnParsing <- cols(INDEXING_NUMBER = col_double(),
                        )
 ```
 
+```{r}
+setup_disk.frame()
+
+# this will allow unlimited amount of data to be passed from worker to worker
+options(future.globals.maxSize = Inf)
+```
+
