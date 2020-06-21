@@ -1,6 +1,6 @@
 # Collecting the Data
 
-First things first, we need to acquire yearly datasets of crashes from the ARIES repository. They let you do so either by downloading csv files or by querying their API. I started with the API first, but ran into trouble when certain years wouldn't respond to my queries. I found that these same datasets would [return an error message](https://i.postimg.cc/wvxV7W9b/ARIES-server-not-responding.png) when trying to preview on the repository as well. Here we will take the approach of downloading all the datasets to disk as csv files before working with them.
+First things first, we need to acquire yearly datasets of crashes from the ARIES repository. They let you do get data either by downloading csv files or by querying their API. I started with the API first, but ran into trouble when certain years wouldn't respond to my queries. I found that these same datasets would [return an error message](https://i.postimg.cc/wvxV7W9b/ARIES-server-not-responding.png) when trying to preview on the repository as well. Here we will take the approach of downloading all the datasets to disk as csv files before working with them.
 
 Start by loading the needed R libraries.
 
@@ -15,8 +15,6 @@ library(disk.frame) #[M]anipulate tabular data that doesn’t fit into Random Ac
 ## Download the yearly datasets
 
 ```{r eval=FALSE}
-# Make a reference vector of years for the datasets
-years <- 2007:2019
 
 # Here is a vector of URL's for each year's repository of data
 urls <- c(
@@ -37,6 +35,9 @@ urls <- c(
 
 # Make a new folder for the data files
 system("mkdir raw-ARIES")
+
+# Make a reference vector of years for the datasets
+years <- 2007:2019
 
 # Download the CSV files
 for (i in 1:13) {
