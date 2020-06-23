@@ -170,6 +170,16 @@ setup_disk.frame()
 
 # this will allow unlimited amount of data to be passed from worker to worker
 options(future.globals.maxSize = Inf)
+
+ARIES2007 <- csv_to_disk.frame(
+    infile = "raw-ARIES/aries_crash_data_2007.csv",
+    in_chunk_size = 500000,
+    colClasses = columnParsing
+)
+
+
+head(ARIES2007, 1000)
+
 ```
 
 
