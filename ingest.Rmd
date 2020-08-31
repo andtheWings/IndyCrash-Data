@@ -5,3 +5,6 @@ date: "8/31/2020"
 output: html_document
 ---
 
+# Collecting the Data
+
+First things first, we need to acquire yearly datasets of crashes from the ARIES repository. They let you do so either by downloading csv files or by querying their API. I started with the API first, but ran into trouble when certain years wouldn't respond to my queries. I found that these same datasets would [return an error message](https://i.postimg.cc/wvxV7W9b/ARIES-server-not-responding.png) when trying to preview on the repository as well. Here we will take the approach of downloading all the datasets to disk as csv files before working with them.
