@@ -1,0 +1,92 @@
+"0","# Make a reference vector of years for the datasets"
+"0","years <- 2007:2019"
+"0",""
+"0","# Here is a vector of URL's for each year's repository of data"
+"0","urls <- c("
+"0","    ""https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/994487c5-5d44-4fb9-ae9d-84ca75659bf0/download/aries_crash_data_2007.csv"","
+"0","    ""https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/e4e56445-8cb6-4fc5-955c-7a2331684279/download/aries_crash_data_2008.csv"","
+"0","    ""https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/881391be-d712-44b4-bfd0-ef9f018a4e4b/download/aries_crash_data_2009.csv"","
+"0","    ""https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/46eb8985-f5b5-4635-9d6c-769dbd05fa02/download/aries_crash_data_2010.csv"","
+"0","    ""https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/32ecfbfa-cf4b-4f64-af48-e1a624ae5ba4/download/aries_crash_data_2011.csv"","
+"0","    ""https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/c2727405-925d-48fe-a8c1-06058ee65a25/download/aries_crash_data_2012.csv"","
+"0","    ""https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/ca9adbd5-001e-49e7-a850-f9f3471eb2db/download/aries_crash_data_2013.csv"","
+"0","    ""https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/a5262209-109c-49cd-b6a9-a72970dc1cf5/download/aries_crash_data_2014.csv"","
+"0","    ""https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/7fd801c4-4cf3-4e18-a949-a4d21401d798/download/aries_crash_data_2015.csv"","
+"0","    ""https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/88646815-5b52-433b-9609-c75500e48e4c/download/aries_crash_data_2016.csv"","
+"0","    ""https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/911880b1-d0bb-4168-a5c1-a52dcc291445/download/aries_crash_data_2017.csv"","
+"0","    ""https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/cc90589c-72d8-4d92-a5fe-73254b555c73/download/aries_crash_data_2018.csv"","
+"0","    ""https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/7081439e-33c9-45f5-9c0b-86d8a8c49252/download/aries_crash_data_2019.csv"""
+"0",")"
+"0",""
+"0","# Make a new folder for the data files"
+"0","system(""mkdir raw-ARIES"")"
+"0",""
+"0","# Download the CSV files"
+"0","for (i in 1:13) {"
+"0","    download.file(url = urls[i], destfile = paste0(""raw-ARIES/aries-crash-data-"",years[i],"".csv""))"
+"0","}"
+"2","trying URL 'https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/994487c5-5d44-4fb9-ae9d-84ca75659bf0/download/aries_crash_data_2007.csv'
+"
+"2","downloaded 268.8 MB
+
+"
+"2","trying URL 'https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/e4e56445-8cb6-4fc5-955c-7a2331684279/download/aries_crash_data_2008.csv'
+"
+"2","downloaded 266.5 MB
+
+"
+"2","trying URL 'https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/881391be-d712-44b4-bfd0-ef9f018a4e4b/download/aries_crash_data_2009.csv'
+"
+"2","downloaded 248.7 MB
+
+"
+"2","trying URL 'https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/46eb8985-f5b5-4635-9d6c-769dbd05fa02/download/aries_crash_data_2010.csv'
+"
+"2","downloaded 255.6 MB
+
+"
+"2","trying URL 'https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/32ecfbfa-cf4b-4f64-af48-e1a624ae5ba4/download/aries_crash_data_2011.csv'
+"
+"2","downloaded 289.1 MB
+
+"
+"2","trying URL 'https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/c2727405-925d-48fe-a8c1-06058ee65a25/download/aries_crash_data_2012.csv'
+"
+"2","downloaded 374.2 MB
+
+"
+"2","trying URL 'https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/ca9adbd5-001e-49e7-a850-f9f3471eb2db/download/aries_crash_data_2013.csv'
+"
+"2","downloaded 465.3 MB
+
+"
+"2","trying URL 'https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/a5262209-109c-49cd-b6a9-a72970dc1cf5/download/aries_crash_data_2014.csv'
+"
+"2","downloaded 515.5 MB
+
+"
+"2","trying URL 'https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/7fd801c4-4cf3-4e18-a949-a4d21401d798/download/aries_crash_data_2015.csv'
+"
+"2","downloaded 536.9 MB
+
+"
+"2","trying URL 'https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/88646815-5b52-433b-9609-c75500e48e4c/download/aries_crash_data_2016.csv'
+"
+"2","downloaded 556.5 MB
+
+"
+"2","trying URL 'https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/911880b1-d0bb-4168-a5c1-a52dcc291445/download/aries_crash_data_2017.csv'
+"
+"2","downloaded 482.3 MB
+
+"
+"2","trying URL 'https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/cc90589c-72d8-4d92-a5fe-73254b555c73/download/aries_crash_data_2018.csv'
+"
+"2","downloaded 476.6 MB
+
+"
+"2","trying URL 'https://hub.mph.in.gov/dataset/4ac55064-1f0d-4e5e-aeee-12faf28d6175/resource/7081439e-33c9-45f5-9c0b-86d8a8c49252/download/aries_crash_data_2019.csv'
+"
+"2","downloaded 334.2 MB
+
+"
