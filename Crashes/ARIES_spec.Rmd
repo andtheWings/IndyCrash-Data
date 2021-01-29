@@ -1,0 +1,148 @@
+---
+title: "Parsing specification for ARIES Crash Data"
+author: "Daniel P. Riggins"
+date: "1/28/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This tells R how to read CSV files that come from the [ARIES collection](https://hub.mph.in.gov/dataset/aries-crash-data-2007-2017):
+
+>The Automated Reporting Information Exchange System (ARIES) is the State of Indiana’s crash repository. Crash data is generated through first responder crash reports and collected within ARIES. Data is available for 2007 to 2017. Examples of this data include crash details such as, vehicle information, road conditions, crash severity, weather conditions, location, date, and time.
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(dataverse)
+```
+
+```{r Outline the specification}
+
+ARIES_spec <- cols(
+    INDEXING_NUMBER = col_double(),
+    INDIVIDUAL_MR_RECORD = col_double(),
+    UNIT_MR_NUMBER = col_double(),
+    STATUSCDE = col_character(),
+    PERSONNMB = col_double(),
+    PERSONTYPECDE = col_skip(),
+    PERSONTYPEDESCR = col_character(),
+    GENDERCDE = col_character(),
+    AGE_GRP = col_character(),
+    POSINVEHCDE = col_skip(),
+    POSINVEHDESCR = col_character(),
+    EJECTTRAPCDE = col_skip(),
+    EJECTTRAPDESCR = col_character(),
+    SAFETYEQUUSEDCDE = col_skip(),
+    SAFETYEQUUSEDDESCR = col_character(),
+    SAFETYEQUEFFIND = col_character(),
+    INJSTATUSCDE = col_skip(),
+    INJSTATUSDESCR = col_character(),
+    INJNATURECDE = col_skip(),
+    INJNATUREDESCR = col_character(),
+    INJLOCCDE = col_skip(),
+    INJLOCCDESCR = col_character(),
+    TESTGIVENCDE = col_skip(),
+    TESTGIVENDESCR = col_character(),
+    RESULTALCHTXT = col_double(),
+    RESULTDRUGIND = col_character(),
+    AGENCYORITXT = col_skip(),
+    AGENCYORIDESCR = col_character(),
+    COUNTYCDE = col_skip(),
+    COUNTY_STATE = col_skip(),
+    COUNTYDESCR = col_character(),
+    CITYCDE = col_skip(),
+    CITYDESCR = col_character(),
+    COLLDTE = col_character(),
+    COLLISION_DAY = col_character(),
+    COLLISION_MONTH = col_character(),
+    COLLISION_YEAR = col_double(),
+    COLLISION_TIME = col_character(),
+    COLLISION_TIME_AM_PM = col_character(),
+    MOTORVEHINVOLVEDNMB = col_double(),
+    TRAILERSINVOLVEDNMB = col_double(),
+    INJUREDNMB = col_double(),
+    DEADNMB = col_double(),
+    DEERNMB = col_double(),
+    RDWYSUFFIXTXT = col_character(),
+    RDWYRAMPTXT = col_character(),
+    INTERINTERCHANGETXT = col_character(),
+    INCORPLIMITIND = col_character(),
+    PROPDAMAGECDE = col_skip(),
+    PROPDAMAGEDESCR = col_character(),
+    LATDECIMALNMB = col_double(),
+    LONGDECIMALNMB = col_double(),
+    TRAFFICCNTLOPIND = col_character(),
+    AGGRESSIVEDRIVEIND = col_character(),
+    HITRUNIND = col_character(),
+    SCHOOLZONEIND = col_character(),
+    RUMBLESTRIPIND = col_character(),
+    CONSTRUCTIND = col_character(),
+    LIGHTCONDCDE = col_skip(),
+    LIGHTCONDDESCR = col_character(),
+    WEATHERCDE = col_skip(),
+    WEATHERDESCR = col_character(),
+    SURFACETYPECDE_CONDDESCR = col_character(),
+    SURFACETYPECDE = col_skip(),
+    SURFACETYPEDESCR = col_character(),
+    PRIMARYFACTORCDE = col_skip(),
+    PRIMARYFACTORDESCR = col_character(),
+    MANNERCOLLCDE = col_skip(),
+    MANNERCOLLDESCR = col_character(),
+    TIMENOTIFIEDTXT = col_character(),
+    TIMENOTIFIEDAMPMTXT = col_character(),
+    TIMEARRIVEDTXT = col_character(),
+    TIMEARRIVEDAMPMTXT = col_character(),
+    INVESTCOMPLETEIND = col_character(),
+    PHOTOSTAKENIND = col_character(),
+    UNIQUELOCATIONID = col_character(),
+    STATEPROPIND = col_character(),
+    TRAFFICCNTRLCDE = col_skip(),
+    TRAFFICCNTRLDESCR = col_character(),
+    UNITNMB = col_double(),
+    UNIT_VEHICLE_NUMBER = col_double(),
+    UNITTYPECDE = col_skip(),
+    UNITTYPEDESCR = col_character(),
+    VEHYEARTXT = col_double(),
+    VEHMAKETXT = col_character(),
+    VEHMODELTXT = col_character(),
+    OCCUPSNMB = col_double(),
+    VEHLICSTATECDE = col_character(),
+    VEHLICSTATEDESCR = col_skip(),
+    AXELSTXT = col_double(),
+    SPEEDLIMITTXT = col_character(),
+    TOWEDIND = col_character(),
+    VEHUSECDE = col_skip(),
+    VEHUSEDESCR = col_character(),
+    ROADTYPECDE = col_skip(),
+    ROADTYPEDESCR = col_character(),
+    TRAVDIRCDE = col_character(),
+    TRAVDIRDESCR = col_skip(),
+    EMGERENCY_RUN = col_character(),
+    FIREIND = col_character(),
+    COLLEVENTCDE = col_skip(),
+    COLLEVENTDESCR = col_character(),
+    PRECOLLACTCDE = col_skip(),
+    PRECOLLACTDESCR = col_character(),
+    DISTRICT = col_character(),
+    DISTRICT_NUM = col_skip(),
+    SUBDISTRICT = col_character()
+)
+
+```
+
+Please note that there are many duplicate variables that come both in the form of a numeric code and of a label. Here I have ignored the numeric codes.
+
+Now we will save the specification as an R data object and upload it to the [Harvard Dataverse]("https://dataverse.harvard.edu") so that it can be used in other analyses. Note that you will need to make your own dataverse account and generate an API token to make this work.
+
+```{r}
+saveRDS(ARIES_spec, "ARIES_spec.RDS")
+
+add_dataset_file(
+  "ARIES_spec.RDS",
+  "doi:10.7910/DVN/3ICPHN",
+  description = "Specification used for parsing ARIES csv files"
+)
+```
+

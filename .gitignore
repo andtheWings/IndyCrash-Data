@@ -2,3 +2,9 @@
 .Rhistory
 .RData
 .Ruserdata
+
+raw-ARIES/
+
+.ipynb_checkpoints/
+
+*.RDS
